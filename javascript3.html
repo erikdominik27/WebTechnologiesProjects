@@ -1,0 +1,428 @@
+<html>
+<body>
+
+  <p id="p1">old text</p>
+  <script>
+    document.getElementById("p1").innerHTML = "New text!";
+  </script>
+
+  <p class="p2"> multiple old texts</p>
+  <p class="p2"> multiple old texts</p>
+  <p class="p2"> multiple old texts</p>
+
+  <script>
+    const elements = document.querySelectorAll(".p2");
+    elements.forEach(el => {
+      el.innerHTML = "Multiple New texts!";
+    });
+  </script>
+
+  <button id="myButton">
+    <div id="textToChange" style="color: red;">Color changing text!</div>
+  </button>
+
+  <script>
+    const colorBtn = document.getElementById("myButton");
+    const textNode = document.getElementById("textToChange");
+
+    colorBtn.addEventListener("click", function() {
+      textNode.textContent = "I turned blue!";
+      textNode.style.color = "blue";
+    });
+  </script>
+
+  <ul id="myList">
+    <li>Coffee <button onclick="removeMe(this)">Delete</button></li>
+    <li>Tea <button onclick="removeMe(this)">Delete</button></li>
+  </ul>
+
+  <button id="addBtn">Add Item</button>
+
+  <script>
+    function removeMe(button) {
+      button.parentElement.remove();
+    }
+
+    const listElement = document.getElementById("myList");
+    const addButton = document.getElementById("addBtn");
+
+    addButton.addEventListener("click", function() {
+      const newLi = document.createElement("li");
+      newLi.innerHTML = `New List Item <button onclick="removeMe(this)">Delete</button>`;
+      listElement.appendChild(newLi);
+    });
+  </script>
+
+  <br><br>
+  <input type="text" id="userInput" placeholder="Type something...">
+  <button id="displayBtn">Show Text</button>
+  <p id="displayText">Your text will appear here.</p>
+
+  <script>
+    const inputField = document.getElementById("userInput");
+    const actionBtn = document.getElementById("displayBtn");
+    const outputPara = document.getElementById("displayText");
+
+    actionBtn.addEventListener("click", function() {
+      const currentVal = inputField.value;
+      outputPara.textContent = currentVal;
+      inputField.value = "";
+    });
+  </script>
+
+  <style>
+    .box {
+      width: 200px;
+      padding: 20px;
+      border: 2px solid black;
+      transition: 0.3s; 
+    }
+    .highlight {
+      background-color: yellow;
+      transform: scale(1.1);
+      border-color: orange;
+    }
+  </style>
+
+  <div id="myBox" class="box">I am a box!</div>
+  <button id="toggleBtn">Toggle Highlight</button>
+
+  <script>
+    const box = document.getElementById("myBox");
+    const btn = document.getElementById("toggleBtn");
+
+    btn.addEventListener("click", function() {
+      box.classList.toggle("highlight");
+    });
+  </script>
+
+  <br><br>
+  <div id="targetBox" style="width: 100px; height: 100px; background-color: gray; transition: 0.5s;"></div>
+  <button id="changeStyleBtn">Transform Box</button>
+
+  <script>
+    // FIXED: Renamed these to avoid conflict with the variables above
+    const transformBox = document.getElementById("targetBox");
+    const transformBtn = document.getElementById("changeStyleBtn");
+
+    transformBtn.addEventListener("click", function() {
+      transformBox.style.backgroundColor = "purple";
+      transformBox.style.width = "200px";
+      transformBox.style.height = "200px";
+      transformBox.style.borderRadius = "50%";
+    });
+  </script>
+
+<p>First paragraph.</p>
+<p>Second paragraph.</p>
+<p>Third paragraph.</p>
+
+<button id="colorBtn">Change All Paragraphs</button>
+
+<script>
+  const colorButton = document.getElementById("colorBtn");
+
+  colorButton.addEventListener("click", function() {
+    
+    const allParagraphs = document.querySelectorAll("p");
+
+    
+    allParagraphs.forEach((para) => {
+      para.style.color = "coral";
+      para.style.fontWeight = "bold";
+    });
+  });
+</script>
+
+
+
+<form id="userForm">
+  <input type="text" id="nameInput" placeholder="Enter Name">
+  <input type="email" id="emailInput" placeholder="Enter Email">
+  
+  <button type="submit">Submit</button>
+</form>
+
+<p id="errorMessage" style="color: red;"></p>
+
+<script>
+  const myForm = document.getElementById("userForm");
+  const nameInp = document.getElementById("nameInput");
+  const emailInp = document.getElementById("emailInput");
+  const errorMsg = document.getElementById("errorMessage");
+
+  myForm.addEventListener("submit", function(event) {
+    
+    event.preventDefault();
+
+    
+    errorMsg.textContent = "";
+
+    
+    if (nameInp.value.trim() === "" || emailInp.value.trim() === "") {
+      errorMsg.textContent = "Error: All fields are required!";
+    } else if (!emailInp.value.includes("@")) {
+      errorMsg.textContent = "Error: Please enter a valid email.";
+    } else {
+      
+      alert("Form submitted successfully!");
+      myForm.reset(); 
+    }
+  });
+</script>
+
+<div class="todo-header">
+  <input type="text" id="todoInput" placeholder="What needs to be done?">
+  <button id="addTodoBtn">Add Task</button>
+</div>
+
+<ul id="todoList">
+  </ul>
+
+<script>
+  const todoInput = document.getElementById("todoInput");
+  const addTodoBtn = document.getElementById("addTodoBtn");
+  const todoList = document.getElementById("todoList");
+
+  
+  function deleteTask(button) {
+    button.parentElement.remove();
+  }
+
+  
+  addTodoBtn.addEventListener("click", function() {
+    const taskText = todoInput.value.trim();
+
+    
+    if (taskText === "") {
+      alert("Please enter a task!");
+      return;
+    }
+
+    
+    const li = document.createElement("li");
+
+    
+    li.innerHTML = `
+      ${taskText} 
+      <button onclick="deleteTask(this)" style="margin-left: 10px; color: red;">Delete</button>
+    `;
+
+    
+    todoList.appendChild(li);
+
+    
+    todoInput.value = "";
+  });
+</script>
+
+<label>Password:</label><br>
+  <input type="password" id="pass1" placeholder="At least 6 characters">
+  <p id="lengthError" style="color: red; font-size: 14px;"></p>
+
+  <label>Confirm Password:</label><br>
+  <input type="password" id="pass2" placeholder="Re-type password">
+  <p id="matchError" style="color: red; font-size: 14px;"></p>
+
+  <button id="validateBtn">Check Password</button>
+
+  <script>
+    const p1 = document.getElementById("pass1");
+    const p2 = document.getElementById("pass2");
+    const lenErr = document.getElementById("lengthError");
+    const matchErr = document.getElementById("matchError");
+    
+    const passBtn = document.getElementById("validateBtn");
+
+    passBtn.addEventListener("click", function() {
+      
+      lenErr.textContent = "";
+      matchErr.textContent = "";
+
+      
+      if (p1.value.length < 6) {
+        lenErr.textContent = "Password is too short (must be at least 6 characters).";
+      }
+
+      
+      if (p1.value !== p2.value) {
+        matchErr.textContent = "Passwords do not match!";
+      } else if (p1.value !== "" && p1.value === p2.value && p1.value.length >= 6) {
+        alert("Password is valid and matches!");
+      }
+    });
+  </script>
+
+
+<form id="termsForm">
+  <input type="checkbox" id="termsBox">
+  <label for="termsBox">I accept the terms and conditions</label>
+  <button type="submit">Submit Agreement</button>
+</form>
+<p id="termsError" style="color: red;"></p>
+
+<script>
+  const termsForm = document.getElementById("termsForm");
+  const termsBox = document.getElementById("termsBox");
+  const termsError = document.getElementById("termsError");
+  
+
+  termsForm.addEventListener("submit", function(event) {
+    if (!termsBox.checked) {
+      event.preventDefault(); 
+      termsError.textContent = "You must accept the terms to continue.";
+    } else {
+      alert("Agreement submitted!");
+    }
+  });
+</script>
+
+
+<p>Please select your gender:</p>
+<input type="radio" name="gender" value="Male" id="male"> <label for="male">Male</label><br>
+<input type="radio" name="gender" value="Female" id="female"> <label for="female">Female</label><br>
+<input type="radio" name="gender" value="Other" id="other"> <label for="other">Other</label><br>
+
+<button id="genderBtn">Show Selection</button>
+<p id="genderResult"></p>
+
+<script>
+  const genderBtn = document.getElementById("genderBtn");
+  const genderResult = document.getElementById("genderResult");
+
+  genderBtn.addEventListener("click", function() {
+    
+    const radios = document.querySelectorAll('input[name="gender"]');
+    let selectedValue = "";
+
+    radios.forEach((radio) => {
+      if (radio.checked) {
+        selectedValue = radio.value;
+      }
+    });
+
+    if (selectedValue) {
+      genderResult.textContent = "You selected: " + selectedValue;
+    } else {
+      genderResult.textContent = "Please select an option.";
+    }
+  });
+</script>
+
+
+<label for="carSelect">Choose a car:</label>
+<select id="carSelect">
+  <option value="">--Please choose an option--</option>
+  <option value="Volvo">Volvo</option>
+  <option value="Audi">Audi</option>
+  <option value="Suzuki">Suzuki</option>
+</select>
+
+<p id="selectionResult">No car selected yet.</p>
+
+<script>
+  const carSelect = document.getElementById("carSelect");
+  const result = document.getElementById("selectionResult");
+
+  carSelect.addEventListener("change", function() {
+    if (this.value !== "") {
+      result.textContent = "You selected: " + this.value;
+    } else {
+      result.textContent = "No car selected yet.";
+    }
+  });
+</script>
+
+
+<style>
+  .input-field {
+    border: 2px solid #ccc;
+    padding: 5px;
+    outline: none;
+  }
+
+  
+  .error-border {
+    border-color: red !important;
+    background-color: #fff0f0;
+  }
+</style>
+
+<input type="text" id="username" class="input-field" placeholder="Username">
+<button id="checkBtn">Validate</button>
+
+<script>
+  const usernameInput = document.getElementById("username");
+  const checkBtn = document.getElementById("checkBtn");
+
+  checkBtn.addEventListener("click", function() {
+    
+    if (usernameInput.value.trim().length < 3) {
+      usernameInput.classList.add("error-border");
+    } else {
+      
+      usernameInput.classList.remove("error-border");
+      alert("Username is valid!");
+    }
+  });
+</script>
+
+
+<form id="myResetForm">
+  <input type="text" placeholder="First Name">
+  <input type="email" placeholder="Email">
+  <button type="reset">Clear All Fields</button>
+</form>
+
+
+<form id="dataForm">
+  <input type="text" id="dataName" placeholder="Your Name">
+  <button type="submit">Submit Data</button>
+</form>
+
+<div id="displayArea" style="margin-top: 10px; padding: 10px; border: 1px dashed gray;">
+  Result will appear here...
+</div>
+
+<script>
+  const dForm = document.getElementById("dataForm");
+  const dArea = document.getElementById("displayArea");
+
+  dForm.addEventListener("submit", function(e) {
+    e.preventDefault(); 
+    const nameValue = document.getElementById("dataName").value;
+    dArea.innerHTML = `<strong>Last Submission:</strong> ${nameValue}`;
+  });
+</script>
+
+<p>Select your hobbies:</p>
+<input type="checkbox" name="hobby" value="Gaming"> Gaming <br>
+<input type="checkbox" name="hobby" value="Reading"> Reading <br>
+<input type="checkbox" name="hobby" value="Coding"> Coding <br>
+
+<button id="hobbyBtn">Update Hobby List</button>
+<ul id="hobbyResult"></ul>
+
+<script>
+  const hBtn = document.getElementById("hobbyBtn");
+  const hList = document.getElementById("hobbyResult");
+
+  hBtn.addEventListener("click", function() {
+    
+    const selected = document.querySelectorAll('input[name="hobby"]:checked');
+    
+    
+    hList.innerHTML = "";
+
+    
+    selected.forEach((hobby) => {
+      const li = document.createElement("li");
+      li.textContent = hobby.value;
+      hList.appendChild(li);
+    });
+  });
+</script>
+
+
+</body>
+</html>
